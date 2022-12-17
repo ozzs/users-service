@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  users-service:
+    build: .
+    command: python3 -m users_service.main
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+      - REDIS_URL=redis://redis
+    ports:
+      - "5001:80"
+
+  users-service-worker:
+    build: .
+    command: celery -A users_service.tasks worker --loglevel=INFO
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+      - REDIS_URL=redis://redis
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "5050:80"
+
+volumes:
+  db:
+    driver: local

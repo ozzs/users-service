@@ -1,0 +1,13 @@
+[flake8]
+select = ANN,B,B9,BLK,C,D,DAR,E,F,I,S,W
+exclude = .venv
+ignore = E203,E501,W503,ANN002,ANN003,ANN101,ANN102,D100,D104,DAR401,S104,C901,B008,ANN401, I100, I202, I201
+max-line-length = 120
+max-complexity = 10
+application-import-names = users_service,tests
+import-order-style = google
+docstring-convention = google
+per-file-ignores = tests/*:D101,D102,D103,D107,S101
+suppress_none_returning = True
+# Darglint config
+strictness = short
