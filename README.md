@@ -6,7 +6,6 @@ To start, run
 
     docker-compose up --build
 
-
 ### Step 1: Create and read user
 
 To create a new user,
@@ -76,6 +75,7 @@ To run tests
     poetry install
     poetry run pytest
 
+## Linting & Formatting
 
 To format code
 
